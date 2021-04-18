@@ -376,6 +376,9 @@ span.psw {
       <label for="quantity"><b>Quantity:</b></label>
       <input type="text" placeholder="quantity" name="quantity" >
 
+      <label for="warningquantity"><b>Warning Quantity:</b></label>
+      <input type="number" placeholder="warning quantity" name="warningquantity">
+
       <label for="purchase_source"><b>Source:</b></label>
       <input type="text" placeholder="source" name="purchase_source" required>
       

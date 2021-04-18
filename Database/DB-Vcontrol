@@ -23,27 +23,7 @@ CREATE TABLE IF NOT EXISTS `Animals` (
   KEY `Animal_ID` (`Animal_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table Exotics.Animals: ~17 rows (approximately)
-/*!40000 ALTER TABLE `Animals` DISABLE KEYS */;
-REPLACE INTO `Animals` (`Animal_ID`, `Species_ID`, `Name`, `Gender`, `Deceased`, `Rack_ID`, `Tub_ID`) VALUES
-	(1, 1, 'Samson', 'Male', 0, 1, 3),
-	(2, 2, 'Lenny', 'Male', 0, 1, 1),
-	(3, 1, 'Nira', 'Female', 0, 0, 0),
-	(4, 1, 'Draco', 'Male', 0, 0, 0),
-	(5, 3, 'Sally', 'Female', 0, 0, 0),
-	(6, 4, 'Ron', 'Female', 0, 0, 0),
-	(7, 5, 'Max', 'Female', 0, 0, 0),
-	(8, 6, 'Fatso', 'Female', 0, 0, 0),
-	(9, 7, 'Ajaax', 'Female', 0, 0, 0),
-	(10, 8, 'Luke', 'Male', 0, 0, 0),
-	(11, 5, 'Glenn', 'Female', 1, 0, 0),
-	(12, 9, 'Hermione', 'Female', 1, 0, 0),
-	(13, 10, 'Ragnaros', 'Female', 0, 0, 0),
-	(14, 11, 'Percy', 'Female', 1, 0, 0),
-	(15, 12, 'Ishi', 'Female', 0, 0, 0),
-	(17, 14, 'Gwen', 'Female', 0, 0, 0),
-	(18, 15, 'Kylo', 'Male', 0, 0, 0);
-/*!40000 ALTER TABLE `Animals` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for view Exotics.Completed_Feeds
 -- Creating temporary table to overcome VIEW dependency errors
@@ -61,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `Feeders` (
   `Item` varchar(50) DEFAULT NULL,
   `Size` varchar(50) DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL,
+  `Warning_Quantity` int(11) DEFAULT 0,
   `Min_Weight` int(11) DEFAULT NULL,
   `Max_Weight` int(11) DEFAULT NULL,
   `Quant_Per_Purchase` double DEFAULT NULL,
@@ -68,21 +49,7 @@ CREATE TABLE IF NOT EXISTS `Feeders` (
   KEY `Feeder_ID` (`Feeder_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table Exotics.Feeders: ~11 rows (approximately)
-/*!40000 ALTER TABLE `Feeders` DISABLE KEYS */;
-REPLACE INTO `Feeders` (`Feeder_ID`, `Item`, `Size`, `Quantity`, `Min_Weight`, `Max_Weight`, `Quant_Per_Purchase`, `Source`) VALUES
-	(3, 'Mouse', 'Extra large', 22, 30, 35, 25, 'www.reptilecentre.com'),
-	(4, 'Rat', 'Large', 4, 300, 290, 5, 'www.reptilecentre.com'),
-	(5, 'Cricket', '', 0, 0, 0, 0, 'www.reptilecentre.com'),
-	(7, 'Dubia roach', '', 0, 0, 0, 0, 'Bred internally'),
-	(8, 'Mealworm', '', 0, 0, 0, 0, 'www.reptilecentre.com'),
-	(9, 'Morio worm', '', 0, 0, 0, 0, 'www.reptilecentre.com'),
-	(10, 'Rat', 'Extra large', 3, 300, 390, 5, 'www.reptilecentre.com'),
-	(11, 'Rat', 'Small', 5, 91, 150, 5, 'www.reptilecentre.com'),
-	(12, 'Rat', 'Large weaner', 2, 51, 90, 5, 'www.reptilecentre.com'),
-	(13, 'Rat', 'Medium', 4, 151, 250, NULL, 'www.reptilecentre.com'),
-	(14, 'Rat', 'Large', 1, 251, 350, NULL, 'www.reptilecentre.com');
-/*!40000 ALTER TABLE `Feeders` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table Exotics.Jobs
 CREATE TABLE IF NOT EXISTS `Jobs` (
@@ -95,267 +62,9 @@ CREATE TABLE IF NOT EXISTS `Jobs` (
   `Food_Item` varchar(50) DEFAULT '0',
   `Weight_Grams` int(11) DEFAULT 0,
   KEY `Job_ID` (`Job_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=261 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=262 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table Exotics.Jobs: ~255 rows (approximately)
-/*!40000 ALTER TABLE `Jobs` DISABLE KEYS */;
-REPLACE INTO `Jobs` (`Job_ID`, `Schedule_ID`, `Due_Date`, `Notes`, `Completed`, `Food_Taken`, `Food_Item`, `Weight_Grams`) VALUES
-	(1, 1, '2021-03-14', 'Left food in. Not sure if deceased', 1, NULL, NULL, NULL),
-	(2, 2, '2021-03-14', 'Left food in. Not sure if deceased', 1, NULL, NULL, NULL),
-	(3, 3, '2021-03-14', 'Left food in. Cannot see ragnaros', 1, NULL, NULL, NULL),
-	(4, 4, '2021-03-14', 'Cannot see Percy. Left mealworm in.', 1, NULL, NULL, NULL),
-	(5, 5, '2021-03-17', '', 0, NULL, NULL, NULL),
-	(6, 6, '2021-03-14', '', 1, NULL, NULL, NULL),
-	(7, 7, '2021-03-16', 'Blocked up hide. probably moulting', 1, NULL, NULL, NULL),
-	(8, 8, '2021-03-14', '', 1, NULL, NULL, NULL),
-	(9, 9, '2021-03-16', 'Taken X1 adult dubia female', 1, NULL, NULL, NULL),
-	(10, 10, '2021-03-14', '', 1, NULL, NULL, NULL),
-	(11, 11, '2021-03-15', 'Didnt take', 1, NULL, NULL, NULL),
-	(12, 12, '2021-03-15', '', 1, NULL, NULL, NULL),
-	(13, 13, '2021-03-14', '', 1, NULL, NULL, NULL),
-	(14, 14, '2021-03-16', 'Large mouse', 1, NULL, NULL, NULL),
-	(15, 15, '2021-03-14', '', 1, NULL, NULL, NULL),
-	(16, 16, '2021-03-14', '', 1, NULL, NULL, NULL),
-	(17, 17, '2021-03-16', 'Large mouse', 1, NULL, NULL, NULL),
-	(18, 18, '2021-03-16', 'Large rat (not taken. Left in)', 1, NULL, NULL, NULL),
-	(19, 19, '2021-03-14', '', 1, NULL, NULL, NULL),
-	(20, 20, '2021-03-13', '', 1, NULL, NULL, NULL),
-	(21, 21, '2021-03-15', '20 minutes fogging with 1/250 f10/water', 1, NULL, NULL, NULL),
-	(22, 22, '2021-03-20', '', 1, NULL, NULL, NULL),
-	(23, 23, '2021-03-14', 'Filled mealworms', 1, NULL, NULL, NULL),
-	(24, 24, '2021-03-14', '', 1, NULL, NULL, NULL),
-	(25, 25, '2021-03-13', '', 1, NULL, NULL, NULL),
-	(26, 26, '2021-03-13', '', 1, NULL, NULL, NULL),
-	(27, 1, '2021-03-17', '', 0, NULL, NULL, NULL),
-	(28, 2, '2021-03-17', '', 0, NULL, NULL, NULL),
-	(29, 3, '2021-03-17', 'X1 mealworm. Didnt take. Left in with crushed head.', 1, NULL, NULL, NULL),
-	(30, 4, '2021-03-17', '', 0, NULL, NULL, NULL),
-	(31, 27, '2021-03-14', 'Taken. X1 mealworm', 1, NULL, NULL, NULL),
-	(32, 27, '2021-03-18', '1x mealworm. Taken', 1, NULL, NULL, NULL),
-	(33, 6, '2021-03-18', '', 1, NULL, NULL, NULL),
-	(34, 8, '2021-03-17', '', 1, NULL, NULL, NULL),
-	(35, 10, '2021-03-17', '', 1, NULL, NULL, NULL),
-	(36, 15, '2021-03-16', '', 1, NULL, NULL, NULL),
-	(37, 16, '2021-03-18', '', 1, NULL, NULL, NULL),
-	(38, 23, '2021-03-17', '', 1, NULL, NULL, NULL),
-	(39, 24, '2021-03-15', '', 1, NULL, NULL, NULL),
-	(40, 19, '2021-03-17', '', 1, NULL, NULL, NULL),
-	(41, 20, '2021-03-18', '', 1, NULL, NULL, NULL),
-	(42, 26, '2021-03-17', '', 1, NULL, NULL, NULL),
-	(43, 25, '2021-03-19', '', 1, NULL, NULL, NULL),
-	(44, 13, '2021-03-16', '', 1, NULL, NULL, NULL),
-	(47, 11, '2021-03-19', 'Didnt take', 1, NULL, NULL, NULL),
-	(48, 12, '2021-03-17', '', 1, NULL, NULL, NULL),
-	(49, 21, '2021-03-17', '', 1, NULL, NULL, NULL),
-	(50, 24, '2021-03-16', '', 1, NULL, NULL, NULL),
-	(51, 28, '2021-03-16', 'Large mouse', 1, NULL, NULL, NULL),
-	(52, 29, '2021-03-16', '', 1, NULL, NULL, NULL),
-	(53, 30, '2021-03-17', '', 1, NULL, NULL, NULL),
-	(54, 7, '2021-03-24', 'Blocked hide', 1, NULL, NULL, NULL),
-	(55, 9, '2021-03-24', 'Did not take', 1, NULL, NULL, NULL),
-	(56, 31, '2021-03-16', 'Taken X1 morio worm', 1, NULL, NULL, NULL),
-	(57, 31, '2021-03-23', 'Did not take', 1, NULL, NULL, NULL),
-	(58, 13, '2021-03-18', '', 1, NULL, NULL, NULL),
-	(59, 32, '2021-03-16', '1 mealworm with head crushed', 1, NULL, NULL, NULL),
-	(60, 33, '2021-03-16', '', 1, NULL, NULL, NULL),
-	(61, 32, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(62, 33, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(63, 29, '2021-03-19', '', 1, NULL, NULL, NULL),
-	(64, 15, '2021-03-18', '', 1, NULL, NULL, NULL),
-	(65, 24, '2021-03-17', '', 1, NULL, NULL, NULL),
-	(66, 14, '2021-03-24', '', 1, NULL, NULL, NULL),
-	(67, 17, '2021-03-24', '', 1, NULL, NULL, NULL),
-	(68, 18, '2021-03-24', '', 0, NULL, NULL, NULL),
-	(69, 28, '2021-03-24', '', 1, NULL, NULL, NULL),
-	(70, 3, '2021-03-20', 'Left 1x mealworm in.', 1, NULL, NULL, NULL),
-	(71, 8, '2021-03-20', 'Still hiding. Presumable moult.', 1, NULL, NULL, NULL),
-	(72, 10, '2021-03-20', '', 1, NULL, NULL, NULL),
-	(73, 23, '2021-03-20', 'Bowl still full. Mealworms and morios', 1, NULL, NULL, NULL),
-	(74, 24, '2021-03-18', '', 1, NULL, NULL, NULL),
-	(75, 12, '2021-03-19', '', 1, NULL, NULL, NULL),
-	(76, 19, '2021-03-20', '', 1, NULL, NULL, NULL),
-	(77, 30, '2021-03-20', '', 1, NULL, NULL, NULL),
-	(78, 26, '2021-03-20', '', 1, NULL, NULL, NULL),
-	(79, 21, '2021-03-19', '', 1, NULL, NULL, NULL),
-	(80, 27, '2021-03-22', '', 1, NULL, NULL, NULL),
-	(81, 6, '2021-03-22', '', 1, NULL, NULL, NULL),
-	(82, 16, '2021-03-22', '', 1, NULL, NULL, NULL),
-	(83, 15, '2021-03-20', '', 1, NULL, NULL, NULL),
-	(84, 20, '2021-03-23', '', 1, NULL, NULL, NULL),
-	(85, 13, '2021-03-21', '', 1, NULL, NULL, NULL),
-	(86, 25, '2021-03-24', '', 1, NULL, NULL, NULL),
-	(87, 11, '2021-03-23', 'Did not take', 1, NULL, NULL, NULL),
-	(88, 29, '2021-03-22', '', 1, NULL, NULL, NULL),
-	(89, 24, '2021-03-20', '', 1, NULL, NULL, NULL),
-	(90, 12, '2021-03-21', '', 1, NULL, NULL, NULL),
-	(91, 19, '2021-03-23', '', 1, NULL, NULL, NULL),
-	(92, 22, '2021-03-27', '', 1, NULL, NULL, NULL),
-	(93, 3, '2021-03-23', 'Left pre killed mealworm in.', 1, NULL, NULL, NULL),
-	(94, 8, '2021-03-23', '', 1, NULL, NULL, NULL),
-	(95, 10, '2021-03-23', '', 1, NULL, NULL, NULL),
-	(96, 23, '2021-03-23', 'Bowl full. Mealworms and morio', 1, NULL, NULL, NULL),
-	(97, 26, '2021-03-23', '', 1, NULL, NULL, NULL),
-	(98, 30, '2021-03-23', '', 1, NULL, NULL, NULL),
-	(99, 24, '2021-03-21', '', 1, NULL, NULL, NULL),
-	(100, 13, '2021-03-23', '', 1, NULL, NULL, NULL),
-	(101, 15, '2021-03-23', '', 1, NULL, NULL, NULL),
-	(102, 27, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(103, 6, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(104, 12, '2021-03-24', '', 1, NULL, NULL, NULL),
-	(105, 16, '2021-03-26', '1 poo', 1, NULL, NULL, NULL),
-	(106, 29, '2021-03-25', '', 1, NULL, NULL, NULL),
-	(107, 24, '2021-03-23', '', 1, NULL, NULL, NULL),
-	(108, 21, '2021-03-24', '', 1, NULL, NULL, NULL),
-	(109, 34, '2021-03-25', 'In blue. Not done.', 1, NULL, NULL, NULL),
-	(110, 31, '2021-03-30', '', 1, NULL, NULL, NULL),
-	(111, 11, '2021-03-27', 'Didnt take', 1, NULL, NULL, NULL),
-	(112, 19, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(113, 3, '2021-03-26', 'Mealworm pre killed and left in', 1, NULL, NULL, NULL),
-	(114, 10, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(115, 8, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(116, 23, '2021-03-26', '', 0, NULL, NULL, NULL),
-	(117, 24, '2021-03-24', '', 1, NULL, NULL, NULL),
-	(118, 15, '2021-03-25', '', 1, NULL, NULL, NULL),
-	(119, 30, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(120, 7, '2021-04-01', 'Moult', 1, NULL, NULL, NULL),
-	(121, 9, '2021-04-01', 'Didnt take', 1, NULL, NULL, NULL),
-	(122, 12, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(123, 21, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(124, 14, '2021-03-31', '', 1, NULL, NULL, NULL),
-	(125, 17, '2021-03-31', '', 1, NULL, NULL, NULL),
-	(126, 28, '2021-03-31', '', 1, NULL, NULL, NULL),
-	(127, 29, '2021-03-28', '', 1, NULL, NULL, NULL),
-	(128, 20, '2021-03-29', '', 1, NULL, NULL, NULL),
-	(129, 26, '2021-03-28', '', 1, NULL, NULL, NULL),
-	(130, 13, '2021-03-27', '', 1, NULL, NULL, NULL),
-	(131, 34, '2021-03-28', '', 1, NULL, NULL, NULL),
-	(132, 24, '2021-03-26', '', 1, NULL, NULL, NULL),
-	(133, 15, '2021-03-27', '', 1, NULL, NULL, NULL),
-	(134, 35, '2021-03-27', '', 1, NULL, NULL, NULL),
-	(135, 27, '2021-03-30', '', 1, NULL, NULL, NULL),
-	(136, 32, '2021-04-05', '', 1, NULL, NULL, NULL),
-	(137, 33, '2021-04-05', '', 1, NULL, NULL, NULL),
-	(138, 6, '2021-03-30', '', 1, NULL, NULL, NULL),
-	(139, 16, '2021-03-30', '', 1, NULL, NULL, NULL),
-	(140, 25, '2021-03-31', '', 1, NULL, NULL, NULL),
-	(141, 24, '2021-03-27', '', 1, NULL, NULL, NULL),
-	(142, 10, '2021-03-29', '', 1, NULL, NULL, NULL),
-	(143, 8, '2021-03-29', '', 1, NULL, NULL, NULL),
-	(144, 12, '2021-03-28', '', 1, NULL, NULL, NULL),
-	(145, 30, '2021-03-29', '', 1, NULL, NULL, NULL),
-	(146, 11, '2021-03-31', 'Didnt take', 1, NULL, NULL, NULL),
-	(147, 3, '2021-03-30', '', 1, NULL, NULL, NULL),
-	(148, 24, '2021-03-28', '', 1, NULL, NULL, NULL),
-	(149, 35, '2021-03-29', '', 1, NULL, NULL, NULL),
-	(150, 19, '2021-04-01', '', 1, NULL, NULL, NULL),
-	(151, 22, '2021-04-05', '', 1, NULL, NULL, NULL),
-	(152, 29, '2021-04-01', '', 1, NULL, NULL, NULL),
-	(153, 15, '2021-03-31', '', 1, NULL, NULL, NULL),
-	(154, 24, '2021-03-30', '', 1, NULL, NULL, NULL),
-	(155, 35, '2021-03-31', '', 1, NULL, NULL, NULL),
-	(156, 10, '2021-04-01', '', 1, NULL, NULL, NULL),
-	(157, 8, '2021-04-01', '', 1, NULL, NULL, NULL),
-	(158, 12, '2021-03-31', '', 1, NULL, NULL, NULL),
-	(159, 30, '2021-04-01', '', 1, NULL, NULL, NULL),
-	(160, 26, '2021-04-01', '', 1, NULL, NULL, NULL),
-	(161, 13, '2021-03-31', '', 1, NULL, NULL, NULL),
-	(162, 20, '2021-04-02', '', 1, NULL, NULL, NULL),
-	(163, 3, '2021-04-02', '', 1, NULL, NULL, NULL),
-	(164, 6, '2021-04-03', '', 1, NULL, NULL, NULL),
-	(165, 16, '2021-04-03', '', 1, NULL, NULL, NULL),
-	(166, 27, '2021-04-03', 'Left food in', 1, NULL, NULL, NULL),
-	(167, 31, '2021-04-06', 'didnt take', 1, NULL, NULL, NULL),
-	(168, 7, '2021-04-09', 'Moult found', 1, NULL, NULL, NULL),
-	(169, 9, '2021-04-09', '', 1, NULL, NULL, NULL),
-	(171, 25, '2021-04-06', '', 1, NULL, NULL, NULL),
-	(172, 11, '2021-04-05', '', 0, NULL, NULL, NULL),
-	(173, 12, '2021-04-03', '', 1, NULL, NULL, NULL),
-	(174, 8, '2021-04-04', '', 1, NULL, NULL, NULL),
-	(175, 19, '2021-04-04', '', 1, NULL, NULL, NULL),
-	(176, 15, '2021-04-03', '', 1, NULL, NULL, NULL),
-	(177, 24, '2021-04-02', '', 1, NULL, NULL, NULL),
-	(178, 26, '2021-04-04', '', 1, NULL, NULL, NULL),
-	(179, 13, '2021-04-03', '', 1, NULL, NULL, NULL),
-	(180, 30, '2021-04-04', '', 1, NULL, NULL, NULL),
-	(181, 10, '2021-04-04', '', 1, NULL, NULL, NULL),
-	(182, 29, '2021-04-04', '', 1, NULL, NULL, NULL),
-	(183, 35, '2021-04-03', '', 1, NULL, NULL, NULL),
-	(184, 36, '2021-04-01', '', 1, NULL, NULL, NULL),
-	(185, 36, '2021-04-15', '', 1, '0', '0', 0),
-	(186, 13, '2021-04-05', '', 1, NULL, NULL, NULL),
-	(187, 14, '2021-04-10', '', 0, NULL, NULL, NULL),
-	(188, 17, '2021-04-10', '', 0, NULL, NULL, NULL),
-	(189, 28, '2021-04-10', '', 1, 'y', 'Rat', 0),
-	(190, 35, '2021-04-05', '', 1, NULL, NULL, NULL),
-	(191, 24, '2021-04-04', '', 1, NULL, NULL, NULL),
-	(192, 12, '2021-04-05', '', 1, '0', '0', 0),
-	(193, 27, '2021-04-07', '', 1, NULL, NULL, NULL),
-	(194, 20, '2021-04-07', '', 1, NULL, NULL, NULL),
-	(195, 15, '2021-04-05', '', 1, NULL, NULL, NULL),
-	(196, 6, '2021-04-07', '', 1, NULL, NULL, NULL),
-	(197, 16, '2021-04-07', '', 1, NULL, NULL, NULL),
-	(198, 3, '2021-04-06', '', 1, NULL, NULL, NULL),
-	(199, 26, '2021-04-07', '', 1, NULL, NULL, NULL),
-	(200, 24, '2021-04-05', '', 1, NULL, NULL, NULL),
-	(201, 30, '2021-04-07', '', 1, NULL, NULL, NULL),
-	(202, 34, '2021-04-07', '', 1, NULL, NULL, NULL),
-	(203, 19, '2021-04-07', '', 1, NULL, NULL, NULL),
-	(204, 21, '2021-04-06', '', 0, NULL, NULL, NULL),
-	(205, 32, '2021-04-15', '', 1, 'y', '', 0),
-	(206, 31, '2021-04-14', '', 0, NULL, NULL, NULL),
-	(207, 22, '2021-04-16', '', 0, NULL, NULL, NULL),
-	(208, 34, '2021-04-12', '', 1, '0', '0', 0),
-	(209, 19, '2021-04-12', '', 1, '0', '0', 0),
-	(210, 26, '2021-04-12', '', 1, '0', '0', 0),
-	(211, 13, '2021-04-11', '', 1, '0', '0', 0),
-	(212, 33, '2021-04-19', '', 0, NULL, NULL, NULL),
-	(213, 30, '2021-04-12', '', 1, '0', '0', 0),
-	(214, 7, '2021-04-17', 'Taken immediately', 1, 'y', '9', 0),
-	(215, 20, '2021-04-13', '', 1, '0', '0', 0),
-	(216, 15, '2021-04-11', '', 1, '0', '0', 0),
-	(217, 16, '2021-04-13', '', 1, '0', '0', 0),
-	(218, 25, '2021-04-14', '', 1, '0', '0', 0),
-	(219, 29, '2021-04-12', '', 1, '0', '0', 0),
-	(220, 24, '2021-04-10', '', 1, '0', '0', 0),
-	(221, 9, '2021-04-17', '', 0, NULL, NULL, NULL),
-	(222, 10, '2021-04-12', '', 1, '0', '0', 0),
-	(223, 8, '2021-04-12', '', 1, '0', '0', 0),
-	(224, 6, '2021-04-13', '', 1, '0', '0', 0),
-	(225, 27, '2021-04-13', 'left in', 1, 'n', 'mealworm', 0),
-	(226, 3, '2021-04-12', 'Left In', 1, 'n', 'mealworm', 0),
-	(227, 35, '2021-04-11', '', 1, 'y', 'crickets', 0),
-	(230, 18, '2021-04-21', '', 0, '0', '0', 0),
-	(231, 14, '2021-04-21', '', 0, '0', '0', 0),
-	(232, 17, '2021-04-21', '', 0, '0', '0', 0),
-	(233, 31, '2021-04-21', '', 0, '0', '0', 0),
-	(234, 28, '2021-04-21', '', 0, '0', '0', 0),
-	(235, 12, '2021-04-17', '', 1, '0', '0', 0),
-	(236, 34, '2021-04-18', '', 0, '0', '0', 0),
-	(237, 19, '2021-04-18', '', 0, '0', '0', 0),
-	(238, 30, '2021-04-18', '', 0, '0', '0', 0),
-	(239, 15, '2021-04-17', '', 1, '0', '0', 0),
-	(240, 16, '2021-04-19', '', 0, '0', '0', 0),
-	(241, 29, '2021-04-18', '', 0, '0', '0', 0),
-	(242, 24, '2021-04-16', '', 1, '0', '0', 0),
-	(243, 35, '2021-04-17', 'Left in bowl', 1, 'y', 'Mealworms ', 0),
-	(244, 6, '2021-04-19', '', 0, '0', '0', 0),
-	(245, 8, '2021-04-18', '', 0, '0', '0', 0),
-	(246, 10, '2021-04-18', '', 0, '0', '0', 0),
-	(247, 27, '2021-04-19', '', 0, '0', '0', 0),
-	(248, 3, '2021-04-18', 'Left in', 1, 'y', '8', 0),
-	(249, 32, '2021-04-25', '', 0, '0', '0', 0),
-	(250, 36, '2021-04-29', '', 0, '0', '0', 0),
-	(251, 20, '2021-04-19', '', 0, '0', '0', 0),
-	(252, 13, '2021-04-17', '', 0, '0', '0', 0),
-	(253, 25, '2021-04-20', '', 0, '0', '0', 0),
-	(254, 26, '2021-04-18', '', 0, '0', '0', 0),
-	(255, 24, '2021-04-18', '', 0, '0', '0', 0),
-	(256, 35, '2021-04-19', '', 0, '0', '0', 0),
-	(257, 15, '2021-04-19', '', 0, '0', '0', 0),
-	(258, 12, '2021-04-19', '', 0, '0', '0', 0),
-	(259, 3, '2021-04-21', '', 0, '0', '0', 0),
-	(260, 7, '2021-04-26', '', 0, '0', '0', 0);
-/*!40000 ALTER TABLE `Jobs` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table Exotics.Racks
 CREATE TABLE IF NOT EXISTS `Racks` (
@@ -365,12 +74,7 @@ CREATE TABLE IF NOT EXISTS `Racks` (
   KEY `Rack_ID` (`Rack_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table Exotics.Racks: ~2 rows (approximately)
-/*!40000 ALTER TABLE `Racks` DISABLE KEYS */;
-REPLACE INTO `Racks` (`Rack_ID`, `Tub_Count`, `Tub_Size`) VALUES
-	(1, 4, 70),
-	(2, 8, 50);
-/*!40000 ALTER TABLE `Racks` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table Exotics.Schedules
 CREATE TABLE IF NOT EXISTS `Schedules` (
@@ -380,45 +84,9 @@ CREATE TABLE IF NOT EXISTS `Schedules` (
   `Frequency` int(11) DEFAULT NULL,
   `Last_Date` date DEFAULT NULL,
   KEY `Schedule_ID` (`Schedule_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table Exotics.Schedules: ~33 rows (approximately)
-/*!40000 ALTER TABLE `Schedules` DISABLE KEYS */;
-REPLACE INTO `Schedules` (`Schedule_ID`, `Animal_ID`, `Task`, `Frequency`, `Last_Date`) VALUES
-	(1, 11, 'Feed', 3, '2021-03-14'),
-	(2, 12, 'Feed', 3, '2021-03-14'),
-	(3, 13, 'Feed', 3, '2021-03-14'),
-	(4, 14, 'Feed', 3, '2021-03-14'),
-	(6, 5, 'Water', 4, '2021-03-14'),
-	(7, 6, 'Feed', 8, '2021-03-16'),
-	(8, 6, 'Water', 3, '2021-03-14'),
-	(9, 7, 'Feed', 8, '2021-03-16'),
-	(10, 7, 'Water', 3, '2021-03-14'),
-	(11, 8, 'Feed', 4, '2021-03-15'),
-	(12, 8, 'Spray', 2, '2021-03-15'),
-	(13, 3, 'Spray', 2, '2021-03-14'),
-	(14, 1, 'Feed', 7, '2021-03-16'),
-	(15, 1, 'Water', 2, '2021-03-14'),
-	(16, 1, 'Clean', 4, '2021-03-14'),
-	(17, 3, 'Feed', 7, '2021-03-16'),
-	(18, 2, 'Feed', 7, '2021-03-16'),
-	(19, 2, 'Water', 3, '2021-03-14'),
-	(20, 3, 'Water', 4, '2021-03-13'),
-	(22, 2, 'Clean', 7, '2021-03-20'),
-	(24, 10, 'Water', 1, '2021-03-14'),
-	(25, 3, 'Spot clean ', 5, '2021-03-13'),
-	(26, 3, 'Handling ', 3, '2021-03-13'),
-	(27, 15, 'Feed', 4, '2021-03-14'),
-	(28, 4, 'Feed', 7, '2021-03-16'),
-	(29, 4, 'Water', 3, '2021-03-16'),
-	(30, 4, 'Spray', 3, '2021-03-17'),
-	(31, 5, 'Feed', 7, '2021-03-16'),
-	(32, 17, 'Feed', 10, '2021-03-16'),
-	(33, 17, 'Spray', 10, '2021-03-16'),
-	(34, 2, 'Handle', 3, '2021-03-25'),
-	(35, 10, 'Feed (10 insects)', 2, '2021-03-27'),
-	(36, 18, 'Flea treatment', 14, '2021-04-01');
-/*!40000 ALTER TABLE `Schedules` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table Exotics.Species
 CREATE TABLE IF NOT EXISTS `Species` (
@@ -433,27 +101,7 @@ CREATE TABLE IF NOT EXISTS `Species` (
   KEY `Species_ID` (`Species_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table Exotics.Species: ~17 rows (approximately)
-/*!40000 ALTER TABLE `Species` DISABLE KEYS */;
-REPLACE INTO `Species` (`Species_ID`, `Class`, `Order`, `Suborder`, `Family`, `Genus`, `Species`, `Common_Name`) VALUES
-	(1, 'Reptilia', 'Squamata', 'Serpentes', 'Pythonidae', 'Python', 'P. regius', 'Royal Python'),
-	(2, 'Reptilia', 'Squamata', 'Serpentes', 'Pythonidae', 'Malayopython', 'M. reticulatus', 'Reticulated Python'),
-	(3, 'Arachnida', 'Araneae', 'Mygalomorphae', 'Theraphosidae', 'Lasiodora', 'L. Parahybana', 'Brazilian Salmon pink bird eater tarantula'),
-	(4, 'Arachnida', 'Araneae', 'Mygalomorphae', 'Theraphosidae', 'Brachypelma', 'B. Boehmei', 'Mexican fireleg tarantula'),
-	(5, 'Arachnida', 'Araneae', 'Mygalomorphae', 'Theraphosidae', 'Tliltocatl', 'T. Albopilosus', 'Curlyhair tarantula'),
-	(6, 'Amphibia', 'Anura', ' ', 'Ceratophryidae', 'Ceratophrys', 'C. Ornata', 'Argentine pacman frog'),
-	(7, 'Reptilia', 'Squamata', ' ', 'Diplodactylidae', 'Correlophus', 'C. Ciliatus', 'Crested Gecko'),
-	(8, 'Reptilia', 'Squamata', ' ', 'Eublepharidae', 'Eublepharis', 'E. Macularius', 'Leopard gecko'),
-	(9, 'Arachnida', 'Araneae', 'Mygalomorphae', 'Theraphosidae', 'Nhandu', 'N. Chromatus', 'Brazilian red and white tarantula'),
-	(10, 'Arachnida', 'Araneae', 'Mygalomorphae', 'Theraphosidae', 'Lasiodora', 'L. Klugi', 'Bahia scarlet tarantula'),
-	(11, 'Arachnida', 'Araneae', 'Mygalomorphae', 'Theraphosidae', 'Brachypelma', 'Hamorii', 'Mexican redknee tarantula'),
-	(12, 'Arachnida', 'Araneae', 'Mygalomorphae', 'Theraphosidae', 'Cyriocosmus', 'C. Elegans', 'Trinidad dwarf tiger tarantula'),
-	(14, 'Arachnida', 'Araneae', 'Araneomorphae', 'Theridiidae', 'Steatoda', 'S. Nobilis', 'False widow'),
-	(15, 'Mamalia', ' ', ' ', ' ', 'Canis', 'Lupus', 'C. L. Familiaris'),
-	(16, '', '', '', '', '', '', ''),
-	(17, '', '', '', '', '', '', ''),
-	(18, '', '', '', '', '', '', '');
-/*!40000 ALTER TABLE `Species` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for view Exotics.To_Do
 -- Creating temporary table to overcome VIEW dependency errors
@@ -476,12 +124,7 @@ CREATE TABLE IF NOT EXISTS `Users` (
   KEY `User_ID` (`User_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table Exotics.Users: ~2 rows (approximately)
-/*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-REPLACE INTO `Users` (`User_ID`, `Username`, `Password`, `Full_Name`) VALUES
-	(1, 'Jmontgomery', 'Sanguine045', 'Josh'),
-	(2, 'Trafferty', '1Newmooneclipse', 'Tara');
-/*!40000 ALTER TABLE `Users` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for view Exotics.Completed_Feeds
 -- Removing temporary table and create final VIEW structure

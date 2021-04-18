@@ -9,6 +9,10 @@ session_start();
         $datetime->modify('+1 day');
         $tomorrow = $datetime->format('Y-m-d');
 
+        $feederquery = mysqli_query($conn, "SELECT * FROM Feeders");
+        
+
+
 ?>
 
 <html>
@@ -302,7 +306,10 @@ span.psw {
       <input type="number" placeholder="max" name="max">
 
       <label for="quantity"><b>Quantity:</b></label>
-      <input type="text" placeholder="quantity" name="quantity">
+      <input type="number" placeholder="quantity" name="quantity">
+
+      <label for="warningquantity"><b>Warning Quantity:</b></label>
+      <input type="number" placeholder="warning quantity" name="warningquantity">
 
       <label for="purchase_source"><b>Source:</b></label>
       <input type="text" placeholder="source" name="purchase_source" required>
@@ -318,13 +325,43 @@ span.psw {
 
 <!-- ########################################################################################## -->
 
+<!-- ##################################### Restock Feeder ##################################### -->
+
+<div id="feeder_restock_modal" class="modal">
+  
+  <form class="modal-content animate" action="/Reptiserver/Functions/restock_feeder.php" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('feeder_restock_modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="../Rescources/Logo.png" alt="Avatar" style="width:40%">
+    </div>
+
+    <div class="container">
+      <input type="hidden" id="source" name="source" value="/Reptiserver/Functions/view_feeders.php">
+
+      <label for="item"><b>Item:</b></label>
+      <select name="item" id="item">
+      <?php 
+      $feederquery2 = mysqli_query($conn, "SELECT * FROM Feeders WHERE Quant_Per_Purchase <> 0");
+      while($row = $feederquery2->fetch_assoc()){?>
+        <option value="<?php echo $row["Feeder_ID"];?>"><?php echo $row["Item"];?> - <?php echo $row["Size"];?></option>
+      <?php } ?>
+      
+
+      <label for="quantity"><b>Quantity:</b></label>
+      <input type="number" placeholder="quantity" name="quantity">
+      
+      <button type="submit">Restock</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('feeder_restock_modal').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<!-- ########################################################################################## -->
+
     <div class="MainContainer">
-
-        <?php
-
-        $rackquery = mysqli_query($conn, "SELECT * FROM Feeders");
-
-        ?>
 
         <div style="font-size:20px;">
         <b><u>Feeders</u></b><br><br>
@@ -340,11 +377,18 @@ span.psw {
             </tr>
             </thead>
             <tbody>
-            <?php while($row = $rackquery->fetch_assoc()){?>
+            <?php while($row = $feederquery->fetch_assoc()){
+              if ($row['Warning_Quantity'] != 0) {
+                $warningtext = "/" . $row['Warning_Quantity'];
+              }else{
+                $warningtext = "";
+              }
+              
+              ?>
             <tr>
                 <td style="text-align: center;"><?php echo $row["Item"]; if($row["Size"]!=""){?> - <?php echo $row["Size"]; }?></td>
                 <td style="text-align: center;"><?php if($row["Min_Weight"] != 0 && $row["Max_Weight"] != 0){ echo $row["Min_Weight"]; ?>g to <?php echo $row["Max_Weight"]; ?>g<?php } else { ?> - <?php } ?></td>
-                <td style="text-align: center;"><?php if($row["Min_Weight"] != 0 && $row["Max_Weight"] != 0){ echo $row["Quantity"]; } else { echo " - "; } ?></td>
+                <td style="text-align: center;<?php if($row["Quantity"] < $row['Warning_Quantity']) { ?>background-color:red;<?php } ?>"><?php if($row["Min_Weight"] != 0 && $row["Max_Weight"] != 0){ echo $row["Quantity"] . $warningtext;} else { echo " - "; } ?></td>
                 <td><form action="/Reptiserver/Functions/delete_feeder.php" method="post"><input type="hidden" id="feeder" name="feeder" value="<?php echo $row["Feeder_ID"]; ?>"><input type="hidden" id="source" name="source" value="/Reptiserver/Functions/view_feeders.php"><button onclick="return clicked();" type="submit" class="btn" style="background-color:darkred;margin-top:22px;"><i class="fa fa-trash" aria-hidden="true"></i></button></form></td>
             </tr>
             <?php } ?>
@@ -354,6 +398,7 @@ span.psw {
         <hr>
 
         <button onclick="document.getElementById('feeder_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>New Feeder</b></button>
+        <button onclick="document.getElementById('feeder_restock_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Restock Feeder</b></button>
         </div>
     </div>
 

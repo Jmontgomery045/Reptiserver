@@ -28,23 +28,12 @@ button:hover {
 </style>
 <?php
 
-        $source=$_POST['source'];
-
         $item=$_POST['item'];
-        $size=$_POST['size'];
-        $min=$_POST['min'];
-        if($min==null){$min=0;}
-        $max=$_POST['max'];
-        if($max==null){$max=0;}
         $quantity=$_POST['quantity'];
-        if($quantity==null){$quantity=0;}
-        $purchase_source=$_POST['purchase_source'];
-        $warningquantity=$_POST['warningquantity'];
-        if($warningquantity==null){$warningquantity=0;}
 
         $conn = mysqli_connect("localhost", "pi", "Sanguine045");
         $db = mysqli_select_db($conn, "Exotics");
-        $query = mysqli_query($conn, "INSERT INTO Feeders (`Item`, `Size`, `Quantity`, `Min_Weight`, `Max_Weight`, `Source`, `Warning_Quantity`) VALUES ('$item', '$size', '$quantity', '$min', '$max', '$purchase_source', '$warningquantity')");
+        $query = mysqli_query($conn, "UPDATE Feeders SET Quantity = Quantity+$quantity WHERE Feeder_ID = '$item'");
         $error = mysqli_error($conn);
 
         mysqli_close($conn); // Closing connection
