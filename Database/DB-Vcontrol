@@ -11,6 +11,11 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+
+-- Dumping database structure for Exotics
+CREATE DATABASE IF NOT EXISTS `Exotics` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `Exotics`;
+
 -- Dumping structure for table Exotics.Animals
 CREATE TABLE IF NOT EXISTS `Animals` (
   `Animal_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -20,8 +25,19 @@ CREATE TABLE IF NOT EXISTS `Animals` (
   `Deceased` int(11) DEFAULT 0,
   `Rack_ID` int(11) DEFAULT 0,
   `Tub_ID` int(11) DEFAULT 0,
+  `Genetics` text DEFAULT '',
   KEY `Animal_ID` (`Animal_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table Exotics.Breeding_Plans
+CREATE TABLE IF NOT EXISTS `Breeding_Plans` (
+  `Plan_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Female` int(11) DEFAULT NULL,
+  `Male` int(11) DEFAULT NULL,
+  KEY `Plan_ID` (`Plan_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- Data exporting was unselected.
 

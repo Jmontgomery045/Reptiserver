@@ -6,6 +6,8 @@ session_start();
         $speciesquery = mysqli_query($conn, "SELECT Species_ID, Common_Name FROM Species");
         $speciesquery2 = mysqli_query($conn, "SELECT Species_ID, Common_Name FROM Species");
         $animalquery = mysqli_query($conn, "SELECT Animal_ID, `Name` FROM Animals WHERE Deceased <> 1");
+        $animalquerymale = mysqli_query($conn, "SELECT Animal_ID, `Name` FROM Animals WHERE Deceased <> 1 AND Gender = 'Male'");
+        $animalqueryfemale = mysqli_query($conn, "SELECT Animal_ID, `Name` FROM Animals WHERE Deceased <> 1 AND Gender = 'Female'");
         mysqli_close($conn); // Closing connection
 ?>
 
@@ -293,6 +295,9 @@ span.psw {
         <option value="Female">Female</option>
         <option value="Female">Unknown</option>
       </select>
+
+      <label for="genes"><b>Genetics (seperate with comma):</b></label>
+      <input type="text" placeholder="insert genes here" name="genes" required>
       
       <button type="submit">Create</button>
     </div>
@@ -433,6 +438,45 @@ span.psw {
 
 <!-- ########################################################################################## -->
 
+<!-- ################################## Create Breeding Plan ################################## -->
+
+<div id="breeding_plan_create_modal" class="modal">
+  
+  <form class="modal-content animate" action="/Reptiserver/Functions/create_breeding_plan.php" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('breeding_plan_create_modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="./Rescources/Logo.png" alt="Avatar" style="width:40%">
+    </div>
+
+    <div class="container">
+
+      <input type="hidden" id="source" name="source" value="/Reptiserver/Welcome.php">
+
+      <label for="class"><b>Male:</b></label>
+      <select name="male" id="male">
+      <?php while($row = $animalquerymale->fetch_assoc()){?>
+        <option value="<?php echo $row['Animal_ID']; ?>"><?php echo $row['Animal_ID']; ?> - <?php echo $row['Name']; ?></option>
+      <?php } ?>
+      </select>
+      <br>
+
+      <label for="class"><b>Female:</b></label>
+      <select name="female" id="female">
+      <?php while($row = $animalqueryfemale->fetch_assoc()){?>
+        <option value="<?php echo $row['Animal_ID']; ?>"><?php echo $row['Animal_ID']; ?> - <?php echo $row['Name']; ?></option>
+      <?php } ?>
+      </select>
+
+      <button type="submit">Create</button>
+    </div>
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('breeding_plan_create_modal').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<!-- ########################################################################################## -->
+
 <div class="navbar"><ul>
   <li style="margin: auto;font-size:20px; width:70%; float:right;"><i class="fa fa-user"></i><br><?php echo(" &nbsp;".$_SESSION["user"]." ");?></li>
   <li style="margin: auto;font-size:20px; width:20%; height:7%; float:left; position:absolute;"><i onclick="menubutton();" style="margin-top:15%;" class="fa fa-bars"></i></li>
@@ -444,6 +488,7 @@ span.psw {
       <button onclick="document.getElementById('animal_view_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Animal</b></button>
       <button onclick="gotoracks();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Racks</b></button>
       <button onclick="gotofeeders();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Feeders</b></button>
+      <button onclick="gotobreedingplans();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Breeding Plans</b></button>
     </div></li> 
 
     <li><i class="fa fa-fw fa-plus"></i> Create <br>
@@ -452,6 +497,7 @@ span.psw {
       <button onclick="document.getElementById('animal_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Animal</b></button>
       <button onclick="document.getElementById('rack_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Rack</b></button>
       <button onclick="document.getElementById('feeder_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Feeder</b></button>
+      <button onclick="document.getElementById('breeding_plan_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Breeding Plan</b></button>
     </div></li>
   
   </div>
@@ -491,6 +537,10 @@ function gotoracks() {
 
 function gotofeeders() {
   window.location.href = './Functions/view_feeders.php';
+}
+
+function gotobreedingplans() {
+  window.location.href = './Functions/view_breeding_plans.php';
 }
 
 function menubutton() {

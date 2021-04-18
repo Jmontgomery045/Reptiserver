@@ -378,6 +378,15 @@ $schedulesquery = mysqli_query($conn, "SELECT * FROM Schedules WHERE Animal_ID =
         <b><u>Gender</b></u><br><?php echo $row['Gender'] ?>
         <hr>
         <div class="detail">
+        <b><u>Genetics</b></u><br><?php 
+        $genes = explode(",", $row['Genetics']);
+        foreach($genes as $gene){
+          echo $gene . "<br>";
+        }
+        
+        ?>
+        <hr>
+        <div class="detail">
         <b><u>Location</b></u><br>
         
         <?php 

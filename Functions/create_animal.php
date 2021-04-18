@@ -32,10 +32,12 @@ button:hover {
         $name=$_POST['name'];
         $gender=$_POST['gender'];
         $user = $_SESSION["user"];
+        $genes = $_POST["genes"];
+        if($genes == null){$genes = "";}
 
         $conn = mysqli_connect("localhost", "pi", "Sanguine045");
         $db = mysqli_select_db($conn, "Exotics");
-        $query = mysqli_query($conn, "INSERT INTO Animals (`Species_ID`, `Name`, `Gender`) VALUES ('$species', '$name', '$gender')");
+        $query = mysqli_query($conn, "INSERT INTO Animals (`Species_ID`, `Name`, `Gender`, `Genetics`) VALUES ('$species', '$name', '$gender', '$genes')");
         $error = mysqli_error($conn);
 
         mysqli_close($conn); // Closing connection
