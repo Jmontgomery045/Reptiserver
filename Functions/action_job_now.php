@@ -3,10 +3,13 @@ session_start();
 
         $notes=$_POST['notes'];
         $job=$_POST['job'];
+        $weight = $_POST['weight'];
+        $taken = $_POST['taken'];
+        $feeder = $_POST['feeder'];
 
         $conn = mysqli_connect("localhost", "pi", "Sanguine045");
         $db = mysqli_select_db($conn, "Exotics");
-        $query = mysqli_query($conn, "UPDATE Jobs SET Completed = 1, Notes = '$notes' WHERE Job_ID = '$job'");
+        $query = mysqli_query($conn, "UPDATE Jobs SET Completed = 1, Notes = '$notes', Weight_Grams = '$weight', Food_Taken = '$taken', Food_Item = '$feeder'  WHERE Job_ID = '$job'");
         $error = mysqli_error($conn);
 
         // set next scheduled job

@@ -2,7 +2,7 @@
 session_start();
         $conn = mysqli_connect("localhost", "pi", "Sanguine045");
         $db = mysqli_select_db($conn, "Exotics");
-        $query = mysqli_query($conn, "SELECT Job_ID, Due_Date, Common_Name, `Name`, Task FROM To_Do WHERE Completed <> 1 AND `Name` IS NOT NULL"); 
+        $query = mysqli_query($conn, "SELECT Animal_ID, Job_ID, Due_Date, Common_Name, `Name`, Task FROM To_Do WHERE Completed <> 1 AND `Name` IS NOT NULL"); 
         $speciesquery = mysqli_query($conn, "SELECT Species_ID, Common_Name FROM Species");
         $speciesquery2 = mysqli_query($conn, "SELECT Species_ID, Common_Name FROM Species");
         $animalquery = mysqli_query($conn, "SELECT Animal_ID, `Name` FROM Animals WHERE Deceased <> 1");
@@ -86,7 +86,7 @@ li {
 }
 
 /* Full-width input fields */
-input[type=text], input[type=password], select {
+input[type=text], input[type=password], input[type=number], select {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -348,30 +348,110 @@ span.psw {
 
 <!-- ########################################################################################## -->
 
-<div class="navbar"><ul>
-  <li style="margin: auto;font-size:20px;"><i class="fa fa-user"></i><br><?php echo(" &nbsp;".$_SESSION["user"]." ");?></li>
+<!-- ###################################### Create Feeder ##################################### -->
 
-    <li><i class="fa fa-fw fa-eye"></i> View <br>
+<div id="feeder_create_modal" class="modal">
+  
+  <form class="modal-content animate" action="/Reptiserver/Functions/create_feeder.php" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('feeder_create_modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="./Rescources/Logo.png" alt="Avatar" style="width:40%">
+    </div>
+
+    <div class="container">
+      <input type="hidden" id="source" name="source" value="/Reptiserver/Welcome.php">
+
+      <label for="item"><b>Item:</b></label>
+      <input type="text" placeholder="item" name="item" required>
+
+      <label for="size"><b>Size:</b></label>
+      <input type="text" placeholder="size" name="size" >
+
+      <label for="min"><b>Min Weight (grams):</b></label>
+      <input type="number" placeholder="min" name="min" >
+
+      <label for="max"><b>Max Weight (grams):</b></label>
+      <input type="number" placeholder="max" name="max" >
+
+      <label for="quantity"><b>Quantity:</b></label>
+      <input type="text" placeholder="quantity" name="quantity" >
+
+      <label for="purchase_source"><b>Source:</b></label>
+      <input type="text" placeholder="source" name="purchase_source" required>
+      
+      <button type="submit">Create</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('feeder_create_modal').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<!-- ########################################################################################## -->
+
+<!-- ###################################### Create Rack ###################################### -->
+
+<div id="rack_create_modal" class="modal">
+  
+  <form class="modal-content animate" action="/Reptiserver/Functions/create_rack.php" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('rack_create_modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="./Rescources/Logo.png" alt="Avatar" style="width:40%">
+    </div>
+
+    <div class="container">
+      <input type="hidden" id="source" name="source" value="/Reptiserver/Welcome.php">
+      <label for="class"><b>Number of Tubs:</b></label>
+      <select name="tubs" id="tubs">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+      <br>
+      <label for="order"><b>Tub size (Litres):</b></label>
+      <input type="number" placeholder="size" name="size" required>
+      <button type="submit">Create</button>
+    </div>
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('rack_create_modal').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<!-- ########################################################################################## -->
+
+<div class="navbar"><ul>
+  <li style="margin: auto;font-size:20px; width:95%; float:middle;"><i class="fa fa-user"></i><br><?php echo(" &nbsp;".$_SESSION["user"]." ");?></li>
+  <li style="margin-top:5%"><i class="fa fa-fw fa-eye"></i> View <br>
     <div class="contents">
-      <!-- <button onclick="document.getElementById('species_view_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Species</b></button> -->
       <button onclick="document.getElementById('animal_view_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Animal</b></button>
-    </div></li>
+      <button onclick="gotoracks();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Racks</b></button>
+      <button onclick="gotofeeders();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Feeders</b></button>
+    </div></li> 
 
     <li><i class="fa fa-fw fa-plus"></i> Create <br>
     <div class="contents">
       <button onclick="document.getElementById('species_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Species</b></button>
       <button onclick="document.getElementById('animal_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Animal</b></button>
+      <button onclick="document.getElementById('rack_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Rack</b></button>
+      <button onclick="document.getElementById('feeder_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Feeder</b></button>
     </div></li>
-
-  <li><i class="fa fa-fw fa-th-list"></i> 
-  To Do 
+  <li style="margin-top: 6%;font-size:20px; width:90%; float:centre;">
   <div>
     <table id="customers">
     <thead>
       <tr>
-        <td>ID</td>
         <td>Name</td>
-        <td>Species</td>
         <td>Task</td>
         <td>Action</td>
       </tr>
@@ -379,9 +459,7 @@ span.psw {
     <tbody>
     <?php while($row = $query->fetch_assoc()){?>
       <tr>
-        <td><?php echo $row["Job_ID"]; ?></td>
         <td><?php echo $row["Name"]; ?></td>
-        <td><?php echo $row["Common_Name"]; ?></td>
         <td><?php echo $row["Task"]; ?></td>
         <td><form method="post" action="/Reptiserver/Functions/action_job.php" style="margin:auto;"><input type="hidden" id="job" name="job" value="<?php echo $row["Job_ID"]?>"><button type="submit" class="btn"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button></form></td>
       </tr>
@@ -395,27 +473,15 @@ span.psw {
 </div>
 
 <script>
-// Get the modal
-var modal = document.getElementById("id01");
 
-var btn = document.getElementByID("btn1");
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
+function gotoracks() {
+  window.location.href = './Functions/view_racks.php';
 }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
+function gotofeeders() {
+  window.location.href = './Functions/view_feeders.php';
 }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
 </script>
 
 </body>

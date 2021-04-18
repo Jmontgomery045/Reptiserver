@@ -302,6 +302,52 @@ span.psw {
 
 <!-- ########################################################################################## -->
 
+<!-- ###################################### Move Animal modal ###################################### -->
+
+<div id="moveanimalmodal" class="modal">
+  
+  <?php
+  $racksquery = mysqli_query($conn, "SELECT * FROM Racks");
+  ?>
+
+  <form class="modal-content animate" action="/Reptiserver/Functions/move_animal.php" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('moveanimalmodal').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/Reptiserver/Rescources/Logo.png" alt="Avatar" style="width:40%">
+    </div>
+
+    <div class="container">
+
+    <input type="hidden" id="animal" name="animal" value="<?php echo $animalid; ?>">
+    <input type="hidden" id="source" name="source" value="/Reptiserver/Functions/view_animal.php?animal=$animalid">
+
+    <div class="container">
+    <label for="rack"><b>Rack:</b></label>
+      <select name="rack" id="rack">
+        <option value="0">None</option>
+        <?php while($rackrow = $racksquery->fetch_assoc()){?>
+          <option value="<?php echo $rackrow["Rack_ID"]; ?>"><?php echo $rackrow["Rack_ID"]; ?></option>
+        <?php } ?>
+      </select>
+    </div>
+
+    <div class="container">
+    <label for="tub"><b>Tub:</b></label>
+    <input type="number" placeholder="tub" name="tub" required>
+    </div>
+    <br>
+
+    <button type="submit">Create</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('moveanimalmodal').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<!-- ########################################################################################## -->
+
     <div class="MainContainer">
     
 <?php
@@ -331,23 +377,37 @@ $schedulesquery = mysqli_query($conn, "SELECT * FROM Schedules WHERE Animal_ID =
         <div class="detail">
         <b><u>Gender</b></u><br><?php echo $row['Gender'] ?>
         <hr>
+        <div class="detail">
+        <b><u>Location</b></u><br>
+        
+        <?php 
+        if($row['Rack_ID']==0 && $row['Tub_ID']==0){
+        ?>Not in rack
+        <br><button onclick="document.getElementById('moveanimalmodal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Move</b></button>
+        <?php
+
+        } else {
+        echo $row['Rack_ID']; ?> - <?php echo $row['Tub_ID'];?>
+        <br><button onclick="document.getElementById('moveanimalmodal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Move</b></button>
+        <?php } ?>
+        <hr>
 
         <table id="customers">
             <thead>
             <tr>
                 <td>Task</td>
                 <td>Frequency</td>
-                <td>Last Actioned</td>
+                <td>Action</td>
                 <td>Delete</td>
             </tr>
             </thead>
             <tbody>
             <?php while($row = $schedulesquery->fetch_assoc()){?>
             <tr>
-                <td><?php echo $row["Task"]; ?></td>
+                <td style="text-align: center;"><?php echo $row["Task"]; ?></td>
                 <td style="text-align: center;"><?php echo $row["Frequency"]; ?></td>
-                <td><?php if($row["Last_Date"] > date('m/d/Y h:i:s a', time())){echo("Not Yet Actioned");} else { echo $row["Last_Date"]; } ?></td>
-                <td><form action="/Reptiserver/Functions/delete_schedule.php" method="post"><input type="hidden" id="schedule" name="schedule" value="<?php echo $row["Schedule_ID"]; ?>"><input type="hidden" id="animal" name="animal" value="<?php echo $row["Animal_ID"]; ?>"><button onclick="return clicked();" type="submit" class="btn" style="background-color:darkred;"><i class="fa fa-trash" aria-hidden="true"></i></button></form></td>
+                <td><form method="post" action="/Reptiserver/Functions/action_next_job.php" style="margin:auto;"><input type="hidden" id="schedule" name="schedule" value="<?php echo $row["Schedule_ID"]?>"><button type="submit" class="btn"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button></form></td>
+                <td><form action="/Reptiserver/Functions/delete_schedule.php" method="post"><input type="hidden" id="schedule" name="schedule" value="<?php echo $row["Schedule_ID"]; ?>"><input type="hidden" id="animal" name="animal" value="<?php echo $row["Animal_ID"]; ?>"><button onclick="return clicked();" type="submit" class="btn" style="background-color:darkred;margin-top:22px;"><i class="fa fa-trash" aria-hidden="true"></i></button></form></td>
             </tr>
             <?php } ?>
             </tbody>

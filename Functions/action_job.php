@@ -4,6 +4,7 @@ session_start();
         $job = $_POST['job'];
         $db = mysqli_select_db($conn, "Exotics");
         $query = mysqli_query($conn, "SELECT * FROM To_Do WHERE Job_ID = '$job'");
+        $feederquery = mysqli_query($conn, "SELECT * FROM Feeders");
         $row = $query->fetch_assoc(); 
 
         $datetime = new DateTime('2013-01-22');
@@ -245,7 +246,7 @@ span.psw {
     
 
         <div style="font-size:20px;">
-        ID: <?php echo $job ?>
+        ID: <?php echo $row['Animal_ID'] ?>
         </div>
     
         <div>
@@ -262,9 +263,43 @@ span.psw {
         <hr> 
         <div class="detail">
         <b><u>Due Date</b></u><br><?php echo $row['Due_Date'] ?>
-
         <hr>
         <form action="/Reptiserver/Functions/action_job_now.php" method="post" style="margin:auto;">
+        <?php
+        if(substr($row['Task'],0,5) === 'Weigh'){
+        echo '<label for="suborder"><b>Weight (grams):</b></label>';
+        echo '<input type="number" id="weight" name="weight" placeholder="Weight" style="width:100%;">';
+        echo '<hr>';
+        }else{
+        echo '<input type="hidden" id="weight" name="weight" value="0">';
+        }
+
+        if(substr($row['Task'],0,4) === 'Feed'){
+        echo '<label for="suborder"><b>Feeder Item:</b></label>';
+        echo '<select name="feeder" id="feeder">';
+        while($feederrow = $feederquery->fetch_assoc()){
+
+          if($feederrow["Size"]!=""){
+          echo '<option value="' . $feederrow['Feeder_ID'] . '">' . $feederrow['Item'] . ' - ' . $feederrow['Size'] . '</option>';
+          } else {
+          echo '<option value="' . $feederrow['Feeder_ID'] . '">' . $feederrow['Item'] . '</option>'; 
+          }
+
+        }
+        echo '</select>';
+        echo '<hr>';
+        echo '<label for="suborder"><b>Taken:</b></label>';
+        echo '<select name="taken" id="taken">';
+        echo '<option value="y">Yes</option>';
+        echo '<option value="n">No</option>';
+        echo '</select>';
+        echo '<hr>';
+        }else{
+        echo '<input type="hidden" id="feeder" name="feeder" value="0">';
+        echo '<input type="hidden" id="taken" name="taken" value="0">';
+        }
+        ?>
+
         <input type="hidden" id="job" name="job" value="<?php echo $job?>">
         <label for="suborder"><b>Notes:</b></label>
         <textarea id="notes" name="notes" rows="4" cols="50" placeholder="Notes" style="width:100%;"></textarea>
