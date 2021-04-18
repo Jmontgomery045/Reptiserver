@@ -431,8 +431,12 @@ span.psw {
 <!-- ########################################################################################## -->
 
 <div class="navbar"><ul>
-  <li style="margin: auto;font-size:20px; width:95%; float:middle;"><i class="fa fa-user"></i><br><?php echo(" &nbsp;".$_SESSION["user"]." ");?></li>
-  <li style="margin-top:5%"><i class="fa fa-fw fa-eye"></i> View <br>
+  <li style="margin: auto;font-size:20px; width:70%; float:right;"><i class="fa fa-user"></i><br><?php echo(" &nbsp;".$_SESSION["user"]." ");?></li>
+  <li style="margin: auto;font-size:20px; width:20%; height:7%; float:left; position:absolute;"><i onclick="menubutton();" style="margin-top:15%;" class="fa fa-bars"></i></li>
+
+  <div id="menus" style="display:none;">
+
+  <li style="margin-top:25%"><i class="fa fa-fw fa-eye"></i> View<br>
     <div class="contents">
       <button onclick="document.getElementById('animal_view_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Animal</b></button>
       <button onclick="gotoracks();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Racks</b></button>
@@ -446,7 +450,11 @@ span.psw {
       <button onclick="document.getElementById('rack_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Rack</b></button>
       <button onclick="document.getElementById('feeder_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Feeder</b></button>
     </div></li>
-  <li style="margin-top: 6%;font-size:20px; width:90%; float:centre;">
+  
+  </div>
+
+  <li style="margin-top: 25%;font-size:20px; width:90%; float:centre;" id="maintable">
+  <b>To Do</b><br><br>
   <div>
     <table id="customers">
     <thead>
@@ -480,6 +488,14 @@ function gotoracks() {
 
 function gotofeeders() {
   window.location.href = './Functions/view_feeders.php';
+}
+
+function menubutton() {
+  if (document.getElementById('menus').style.display == 'block') {
+    document.getElementById('menus').style.display='none';
+  } else {
+    document.getElementById('menus').style.display='block';
+  }
 }
 
 </script>
