@@ -275,7 +275,7 @@ span.psw {
         }
 
         if(substr($row['Task'],0,4) === 'Feed'){
-        echo '<label for="suborder"><b>Feeder Item:</b></label>';
+        echo '<label for="feeder"><b>Feeder Item:</b></label>';
         echo '<select name="feeder" id="feeder">';
         while($feederrow = $feederquery->fetch_assoc()){
 
@@ -288,7 +288,10 @@ span.psw {
         }
         echo '</select>';
         echo '<hr>';
-        echo '<label for="suborder"><b>Taken:</b></label>';
+        echo '<label for="quantity"><b>Quantity Given:</b></label>';
+        echo '<input type="number" id="quantity" name="quantity" placeholder="Quantity" style="width:100%;">';
+        echo '<hr>';
+        echo '<label for="taken"><b>Taken:</b></label>';
         echo '<select name="taken" id="taken">';
         echo '<option value="y">Yes</option>';
         echo '<option value="n">No</option>';
