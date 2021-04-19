@@ -2,7 +2,7 @@
 session_start();
         $conn = mysqli_connect("localhost", "pi", "Sanguine045");
         $db = mysqli_select_db($conn, "Exotics");
-        $query = mysqli_query($conn, "SELECT Animal_ID, Job_ID, Due_Date, Common_Name, `Name`, Task FROM To_Do WHERE Completed <> 1 AND `Name` IS NOT NULL"); 
+        $query = mysqli_query($conn, "SELECT Animal_ID, Job_ID, Due_Date, Common_Name, case when `Name` is null then 'Room' else `Name` end as `Name`, Task FROM To_Do WHERE Completed <> 1 AND `Task` IS NOT NULL"); 
         $speciesquery = mysqli_query($conn, "SELECT Species_ID, Common_Name FROM Species");
         $speciesquery2 = mysqli_query($conn, "SELECT Species_ID, Common_Name FROM Species");
         $animalquery = mysqli_query($conn, "SELECT Animal_ID, `Name` FROM Animals WHERE Deceased <> 1");
@@ -489,6 +489,7 @@ span.psw {
       <button onclick="gotoracks();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Racks</b></button>
       <button onclick="gotofeeders();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Feeders</b></button>
       <button onclick="gotobreedingplans();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Breeding Plans</b></button>
+      <button onclick="gotoroomschedules();" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>Room Schedules</b></button>
     </div></li> 
 
     <li><i class="fa fa-fw fa-plus"></i> Create <br>
@@ -541,6 +542,10 @@ function gotofeeders() {
 
 function gotobreedingplans() {
   window.location.href = './Functions/view_breeding_plans.php';
+}
+
+function gotoroomschedules() {
+  window.location.href = './Functions/view_room_schedules.php';
 }
 
 function menubutton() {

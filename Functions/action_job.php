@@ -295,6 +295,7 @@ span.psw {
         echo '<select name="taken" id="taken">';
         echo '<option value="y">Yes</option>';
         echo '<option value="n">No</option>';
+        echo '<option value="l">Left In</option>';
         echo '</select>';
         echo '<hr>';
         }else{

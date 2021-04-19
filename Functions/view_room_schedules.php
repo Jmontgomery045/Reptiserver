@@ -3,12 +3,15 @@ session_start();
         $conn = mysqli_connect("localhost", "pi", "Sanguine045");
         $animalid = $_POST['animal'] . $_GET['animal'];
         $db = mysqli_select_db($conn, "Exotics");
-        $animalquerymale = mysqli_query($conn, "SELECT Animal_ID, `Name` FROM Animals WHERE Deceased <> 1 AND Gender = 'Male'");
-        $animalqueryfemale = mysqli_query($conn, "SELECT Animal_ID, `Name` FROM Animals WHERE Deceased <> 1 AND Gender = 'Female'");
+
 
         $datetime = new DateTime('2013-01-22');
         $datetime->modify('+1 day');
         $tomorrow = $datetime->format('Y-m-d');
+
+        $schedulequery = mysqli_query($conn, "SELECT * FROM Schedules WHERE Animal_ID = 0;");
+        
+
 
 ?>
 
@@ -237,39 +240,36 @@ span.psw {
 </style>
 <body>
 
-<!-- ################################## Create Breeding Plan ################################## -->
+<!-- ###################################### New Schedule modal ###################################### -->
 
-<div id="breeding_plan_create_modal" class="modal">
+<div id="newschedulemodal" class="modal">
   
-  <form class="modal-content animate" action="/Reptiserver/Functions/create_breeding_plan.php" method="post">
+  <form class="modal-content animate" action="/Reptiserver/Functions/create_room_schedule.php" method="post">
     <div class="imgcontainer">
-      <span onclick="document.getElementById('breeding_plan_create_modal').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="../Rescources/Logo.png" alt="Avatar" style="width:40%">
+      <span onclick="document.getElementById('newschedulemodal').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/Reptiserver/Rescources/Logo.png" alt="Avatar" style="width:40%">
     </div>
 
     <div class="container">
 
-      <input type="hidden" id="source" name="source" value="/Reptiserver/Functions/view_breeding_plans.php">
+    <label for="task"><b>Task:</b></label>
+    <input type="text" placeholder="task" name="task" required>
 
-      <label for="class"><b>Male:</b></label>
-      <select name="male" id="male">
-      <?php while($row = $animalquerymale->fetch_assoc()){?>
-        <option value="<?php echo $row['Animal_ID']; ?>"><?php echo $row['Animal_ID']; ?> - <?php echo $row['Name']; ?></option>
-      <?php } ?>
-      </select>
-      <br>
+    <label for="frequency"><b>Frequency (days):</b></label>
+    <input type="number" placeholder="frequency" name="frequency" required>
 
-      <label for="class"><b>Female:</b></label>
-      <select name="female" id="female">
-      <?php while($row = $animalqueryfemale->fetch_assoc()){?>
-        <option value="<?php echo $row['Animal_ID']; ?>"><?php echo $row['Animal_ID']; ?> - <?php echo $row['Name']; ?></option>
-      <?php } ?>
-      </select>
+    <label for="first_date"><b>First Date:</b></label>
+    <input type="date" id="first_date" name="first_date"
+       value=""
+       min="2021-03-01" max="2099-12-31">
 
-      <button type="submit">Create</button>
+    <input type="hidden" id="animal" name="animal" value="<?php echo $animalid?>">
+
+    <button type="submit">Create</button>
     </div>
+
     <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('breeding_plan_create_modal').style.display='none'" class="cancelbtn">Cancel</button>
+      <button type="button" onclick="document.getElementById('newschedulemodal').style.display='none'" class="cancelbtn">Cancel</button>
     </div>
   </form>
 </div>
@@ -278,50 +278,31 @@ span.psw {
 
     <div class="MainContainer">
 
-        <?php
-
-        $breedingquery = mysqli_query($conn, "SELECT BP.Plan_ID, S.Common_Name AS 'Species', AF.`Name` AS 'Female', AM.`Name` AS 'Male', AF.Genetics AS 'Female_Genes', AM.Genetics AS 'Male_Genes' FROM Breeding_Plans BP JOIN Animals AM ON BP.Male = AM.Animal_ID JOIN Animals AF ON BP.Female = AF.Animal_ID JOIN Species S ON AM.Species_ID = S.Species_ID");
-
-        ?>
-
         <div style="font-size:20px;">
-        <b><u>Breeding Plans</u></b><br><br>
+        <b><u>Room Schedules</u></b><br><br>
         </div>
 
         <table id="customers">
             <thead>
             <tr>
-                <td>Species</td>
-                <td>Participants</td>
-                <td style="text-align:center;">Calc</td>
+                <td>Task</td>
+                <td>Frequency</td>
                 <td>Delete</td>
             </tr>
             </thead>
             <tbody>
-            <?php while($row = $breedingquery->fetch_assoc()){
-                $species = $row['Species'];
-                if (substr($species, -6)=="Python") {$subarea = "pythons";}
-                else if (substr($species, -6)=="Gecko") {$subarea = "lizards";}
-
-                if($species == "Royal Python"){$species = "ball-pythons";}
-                else if($species == "Reticulated Python"){$species = "reticulated-pythons";}
-                
-                $malegenes = str_replace(',', '%2C', $row['Male_Genes']);
-                $femalegenes = str_replace(',', '%2C', $row['Female_Genes']);
-                ?>
+            <?php while($row = $schedulequery->fetch_assoc()){ ?>
             <tr>
-                <td style="text-align: center;"><?php echo $row["Species"]; ?></td>
-                <td style="text-align: center;"><?php echo $row["Male"]; ?> + <?php echo $row["Female"]; ?></td>
-                <td><form style="padding-top:10px;"><a href="https://www.morphmarket.com/c/reptiles/<?php echo $subarea; ?>/<?php echo $species; ?>/genetic-calculator/?s1=<?php echo $malegenes; ?>&s2=<?php echo $femalegenes; ?>"><div class="btn" style="background-color:green;"><i style="padding-left:3px;" class="fa fa-calculator" aria-hidden="true"></i></div></div></a></form></td>
-                <td><form style="padding-top:10px;" action="/Reptiserver/Functions/delete_breeding_plan.php" method="post"><input type="hidden" id="plan" name="plan" value="<?php echo $row["Plan_ID"]; ?>"><input type="hidden" id="source" name="source" value="/Reptiserver/Functions/view_breeding_plans.php"><div onclick="return clicked();" type="submit" class="btn" style="background-color:darkred;"><i class="fa fa-trash" aria-hidden="true"></i></button></form></td>
+                <td style="text-align: center;"><?php echo $row["Task"];?></td>
+                <td style="text-align: center;"><?php echo $row["Frequency"];?></td>
+                <td><form action="/Reptiserver/Functions/delete_room_schedule.php" method="post"><input type="hidden" id="schedule" name="schedule" value="<?php echo $row["Schedule_ID"]; ?>"><button onclick="return clicked();" type="submit" class="btn" style="background-color:darkred;margin-top:22px;"><i class="fa fa-trash" aria-hidden="true"></i></button></form></td>
             </tr>
             <?php } ?>
             </tbody>
         </table>
 
         <hr>
-
-        <button onclick="document.getElementById('breeding_plan_create_modal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>New Plan</b></button>
+        <button onclick="document.getElementById('newschedulemodal').style.display='block'" style="width:40%;margin-left: 30%;margin-right:30%" id="btn1"><b>New Schedule</b></button>
         </div>
     </div>
 
@@ -329,7 +310,7 @@ span.psw {
 
 function clicked(e)
 {
-    if(!confirm('Are you sure you wish to delete this plan?')) {
+    if(!confirm('Are you sure you wish to delete this schedule?')) {
         e.preventDefault();
     }
 }
